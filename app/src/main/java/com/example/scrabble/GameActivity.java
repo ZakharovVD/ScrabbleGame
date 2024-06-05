@@ -87,7 +87,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             createAlertDialog(0);
             createAlertDialog(1);
         } else { // Creating a computer player
-            players[1] = new GamePlayer();
+            players[1] = new GamePlayer(this);
             TextView tv = findViewById(R.id.viewName2);
             tv.setText(R.string.computerName);
         }
@@ -436,7 +436,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         isComputer = preferences.getBoolean(getString(R.string.isComputer), false);
         if (isComputer) {
-            players[1] = new GamePlayer();
+            players[1] = new GamePlayer(this);
             TextView tv = findViewById(R.id.viewName2);
             tv.setText(R.string.computerName);
         }
