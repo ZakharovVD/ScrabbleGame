@@ -1,82 +1,76 @@
-package com.example.scrabble;
+package com.example.scrabble
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.Random
 
-public class GameBag {
+class GameBag {
 
-    private final Map<GameLetter, Integer> bag = new HashMap<>();
-    // Amount of letters left
-    private int num = 131;
+    private val bag: MutableMap<GameLetter, Int> = mutableMapOf()
+    private var num = 131
 
-    public GameBag() {
-        bag.put(new GameLetter('а'), 10);
-        bag.put(new GameLetter('б'), 3);
-        bag.put(new GameLetter('в'), 5);
-        bag.put(new GameLetter('г'), 3);
-        bag.put(new GameLetter('д'), 5);
-        bag.put(new GameLetter('е'), 9);
-        bag.put(new GameLetter('ж'), 2);
-        bag.put(new GameLetter('з'), 2);
-        bag.put(new GameLetter('и'), 8);
-        bag.put(new GameLetter('й'), 4);
-        bag.put(new GameLetter('к'), 6);
-        bag.put(new GameLetter('л'), 4);
-        bag.put(new GameLetter('м'), 5);
-        bag.put(new GameLetter('н'), 8);
-        bag.put(new GameLetter('о'), 10);
-        bag.put(new GameLetter('п'), 6);
-        bag.put(new GameLetter('р'), 6);
-        bag.put(new GameLetter('с'), 6);
-        bag.put(new GameLetter('т'), 5);
-        bag.put(new GameLetter('у'), 3);
-        bag.put(new GameLetter('ф'), 1);
-        bag.put(new GameLetter('х'), 2);
-        bag.put(new GameLetter('ц'), 1);
-        bag.put(new GameLetter('ч'), 2);
-        bag.put(new GameLetter('ш'), 1);
-        bag.put(new GameLetter('щ'), 1);
-        bag.put(new GameLetter('ъ'), 1);
-        bag.put(new GameLetter('ы'), 2);
-        bag.put(new GameLetter('ь'), 2);
-        bag.put(new GameLetter('э'), 1);
-        bag.put(new GameLetter('ю'), 1);
-        bag.put(new GameLetter('я'), 3);
-        bag.put(new GameLetter('*'), 3);
+    init {
+        bag[GameLetter('а')] = 10
+        bag[GameLetter('б')] = 3
+        bag[GameLetter('в')] = 5
+        bag[GameLetter('г')] = 3
+        bag[GameLetter('д')] = 5
+        bag[GameLetter('е')] = 9
+        bag[GameLetter('ж')] = 2
+        bag[GameLetter('з')] = 2
+        bag[GameLetter('и')] = 8
+        bag[GameLetter('й')] = 4
+        bag[GameLetter('к')] = 6
+        bag[GameLetter('л')] = 4
+        bag[GameLetter('м')] = 5
+        bag[GameLetter('н')] = 8
+        bag[GameLetter('о')] = 10
+        bag[GameLetter('п')] = 6
+        bag[GameLetter('р')] = 6
+        bag[GameLetter('с')] = 6
+        bag[GameLetter('т')] = 5
+        bag[GameLetter('у')] = 3
+        bag[GameLetter('ф')] = 1
+        bag[GameLetter('х')] = 2
+        bag[GameLetter('ц')] = 1
+        bag[GameLetter('ч')] = 2
+        bag[GameLetter('ш')] = 1
+        bag[GameLetter('щ')] = 1
+        bag[GameLetter('ъ')] = 1
+        bag[GameLetter('ы')] = 2
+        bag[GameLetter('ь')] = 2
+        bag[GameLetter('э')] = 1
+        bag[GameLetter('ю')] = 1
+        bag[GameLetter('я')] = 3
+        bag[GameLetter('*')] = 3
     }
 
-    public GameLetter getLetter() {
-        if (bag.size() == 0) {
-            return null;
+    fun getLetter(): GameLetter? {
+        if (bag.isEmpty()) {
+            return null
         }
-        int idx = new Random().nextInt(num) + 1;
-        int i = 0;
-        for(Map.Entry<GameLetter, Integer> item : bag.entrySet()) {
-            i += item.getValue();
+        val idx = Random().nextInt(num) + 1
+        var i = 0
+        for ((key, value) in bag) {
+            i += value
             if (i >= idx) {
-                if (item.getValue() > 1) {
-                    item.setValue(item.getValue() - 1);
+                if (value > 1) {
+                    bag[key] = value - 1
+                } else {
+                    bag.remove(key)
                 }
-                else {
-                    bag.remove(item);
-                }
-                --num;
-                return item.getKey();
+                num--
+                return key
             }
         }
-        // template
-        return new GameLetter();
+        return GameLetter()
     }
 
-    public void backLetter(Set<GameLetter> backSet) {
-        for (GameLetter item : backSet) {
-            bag.put(item, bag.get(item) + 1);
+    fun backLetter(backSet: Set<GameLetter>) {
+        for (item in backSet) {
+            bag[item] = bag.getOrDefault(item, 0) + 1
         }
     }
 
-    public Map<GameLetter, Integer> getBag() {
-        return bag;
+    fun getBag(): Map<GameLetter, Int> {
+        return bag
     }
 }
